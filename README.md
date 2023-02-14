@@ -1,4 +1,12 @@
-# Casino
+# SimAPR
+
+SimAPR is a replay-based patch-scheduling simulation system. Using SimAPR, researchers can easily and quickly evaluate the performance of a patch-scheduling algorithm. Currently, we provide the following three scheduling algorithms. 
+
+1. The original scheduling algorithms of the following six APR tools: TBar, Avatar, FixMiner, KPar, Recoder and AlphaRepair  
+2. GenProg-SL:
+3. SeAPR:
+4. Casino:
+  
 
 ## 1. Environments & Setup
 
