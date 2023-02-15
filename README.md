@@ -17,51 +17,41 @@ pip install -r requirements.txt
 
 Run casino for TBar
 ```
-casino.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> --use-pass-test --tbar-mode -- python3 script/d4j_run_test.py <path_to_tbar>/buggy
+casino.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --tbar-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_tbar>/buggy
 ```
 
 Run casino for Recoder
 ```
-casino.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> --use-pass-test --recoder-mode -- python3 script/d4j_run_test.py <path_to_recoder>/buggy
+casino.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --recoder-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_recoder>/buggy
 ```
 
-Run casino for Prophet
-
+Example:
+```shell
+python3 /root/casino/casino.py -o /root/alpha-repair/out/Chart-1-casino-0 -t 180000 -w /root/alpha-repair/d4j/Chart-1 -p /root/alpha-repair -m guided -T 18000 --use-pass-test --recoder-mode --use-simulation-mode /root/alpha-repair/sim/Chart-1/Chart-1-sim.json --use-exp-alpha --seed 1812569871 -- python3 /root/casino/script/d4j_run_test.py /root/alpha-repair/buggy
 ```
-casino.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> --use-pass-test -p <path_to_tool> -- <test_script> <arguments>
-```
 
-## 3. Mode
-* guided: Casino
-* seapr: using SeAPR algorithm
-
-* prophet: Prophet algorithm for C
-* spr: SPR algorithm for C
-* tbar: TBar algorithm for Java
-* recoder: Recoder algorithm for Java
-
-* random: complete random
-* original: run original program for Java
-
-## 4. Options
+## 3. Options
 * `-o <output_dir>`: output directory (`--outdir`)
 * `-w <path_to_inputs>`: directory to input json file and patched sources (`--workdir`)
 * `-t <millisecond>`: timeout for single test (`--timeout`)
 * `-m <mode>`: mode (`--mode`)
-* `-p <path_to_tool>`: path to each tool, required for `prophet` (`--msv-path`)
+    - guided, seapr, genprog
+    - recoder, tbar, fixminer : these are option when using original tool's algorithm.
 * `-E <iteration>`: iteration limit (`--cycle-limit`)
 * `-T <second>`: time limit (`--time-limit`)
-* `-c <correct_patch_id>`: id of correct patch, for debugging and `--finish-correct-patch` option (`--correct-patch`)
-* `--finish-correct-patch`: finish if it reaches correct patch
-* `--tbar-mode`: required for template-based Java APR tools(TBar, AVATAR, FixMiner, KPar)
-- `--recoder-mode`: required for learning-based APR tools(Recoder, AlphaRepair)
 * `--use-pattern`: In `seapr` mode, use `SeAPR++`.
 * `--use-full-validation` : Use full validation matrix for `seapr`.
 * `--seed <int>`: Use seed for random
 * `--ignore-compile-error`: Do not update result for non-compilable patch candidates
 * `--count-compile-fail`: Do not count iteration for non-compilable patch candidates
 * `--not-use-<guide/epsilon>`: Do not use vertical/horizontal search
+- `--tbar-mode`: required for template-based Java APR tools(TBar, AVATAR, FixMiner, KPar)
+- `--recoder-mode`: required for learning-based APR tools(Recoder, AlphaRepair)
 * `--fixminer-mode`: required for fixminer
+
+
+## 4. Experiments
+Necessary resources for replication are in [experiments](./experiments/) folder.
 
 ## 5. Project Structure
 ```
