@@ -1,7 +1,7 @@
 # Experiment
 
 ## 1. Patch Generation
-For the experiment, you first need to generate patches.
+For the experiment, you first need to generate patches. Since patch generation method is different for each tool, you should read each tool's README.md file.
 
 ### 1.1. TBar, Avatar, kPar and Fixminer
 * ```seeds.py```: list of seeds for out experiment
@@ -13,9 +13,9 @@ For the experiment, you first need to generate patches.
 * If gpus are ready, install [anaconda](https://www.anaconda.com/). 
   You can setup environment by
 ```
-cd recoder
-# or cd alpha-repair
-conda env new -f data/env.yaml
+$ cd recoder  # or cd alpha-repair
+$ conda env new -f data/env.yaml
+$ conda activate recoder # or alpha
 ```
 
 
