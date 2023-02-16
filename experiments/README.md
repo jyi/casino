@@ -16,6 +16,8 @@ For example,
 $ cd avatar
 $ python3 avatar.py Chart_4
 ```
+This will generate patch candidates with Avatar for Chart 4.
+
 Note: this will consumes a lot of disk space. Make sure that you have more than 1GB of space.
 
 ## 2. Run SimAPR
@@ -35,6 +37,7 @@ For example,
 $ cd avatar
 $ python3 search-avatar-orig.py Chart_4
 ```
+This will follow the order from original tool for Chart 4.
 
 ### SimAPR and GenProg
 Since `SimAPR` and `GenProg` are stochastic approach, they need seed for randomness.
@@ -52,6 +55,7 @@ For example,
 $ cd avatar
 $ python3 search-avatar-simapr.py Chart_4 12345678
 ```
+This will run SimAPR algorithm for Chart 4 with seed 12345678.
 
 ### Ablation Study
 For ablation study, we run `SimAPR` without vertical and without horizontal.
@@ -72,6 +76,7 @@ For example,
 $ cd avatar
 $ python3 search-avatar-ablation.py Chart_4 vertical 12345678
 ```
+This will run Avatar for Chart_4 without vertical search.
 
 ## 3. Output
 Outputs are saved in `<tool>/result/<project>-<algorithm>`.
