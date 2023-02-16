@@ -1,40 +1,42 @@
-# Fix Bugs with kPAR automatically
+# kPar
+This is a modified kPAr to generate and save all patch candidates.
 
-kPAR: a straightforward fix pattern-based APR system.
+Since this tool does not run patch validation step, execution time is usually quite short (~1h).
+However, you need a lot of disk space to save all candidates.
 
-I. Requirement
-----------------
- - Java 1.7
- - [Defects4J(v1.2.0)](https://github.com/rjust/defects4j)
- - kPAR
+## How to run  
+First, compile this project:
+```
+$ ./compile.sh
+```
 
- II. Prepare Defects4J Bugs
---------------------
- 1. Download and Install Defects4J.
- - `./installD4J.sh`
+Then, checkout the project in `buggy/`:
+```
+$ defects4j checkout -p <subject> -v <id>b -w buggy/<project>
+```
+For example,
+```
+$ defects4j checkout -p Chart -v 4b -w buggy/Chart_4
+```
 
- 2. Check out and compile each bug.
- - `./checkoutD4JBugs.sh`
+Next, run script to generate patch candidates:
+```
+$ ./KParFixRunner.sh <project_dir> <version> <d4j_dir> <output_dir>
+```
+#### Important: last character of every paths in arguments should be slash(/).
+* ```<project_dir>```: Location of projects. If your project is in ```./buggy/Chart_1/```, then it should be ```./buggy/```.
+* ```<version>```: Version name to run. Format should be ```<project>_<version>```. (e.g. ```Chart_24```)
+* ```<d4j_dir>```: Location of Defects4j. If Defects4j is installed in ```/defects4j```, then it should be ```/defects4j/```.
+* `<output_dir>`: Location of output. This should be `d4j/`.
+  
+For example:
+```
+$ ./KParFixRunner.sh buggy/ Chart_4 /defects4j/ d4j/
+```
 
-III. Compile & Run kPar
---------------------
- 1. Compile kPar with `compile.sh` file
+## Output
+Output files are in ```./d4j/<version>/```.
 
- 2. Fixing Defects4J bugs with fault localization.
- - `./KParFixRunner.sh <Bug_Data_Path> <Bug_ID> <defects4j_Home> <outputh_path>`
-
-   Example: `./KParFixRunner.sh $(pwd)/D4J/projects/ Chart_8 $(pwd)/D4J/defects4j/ $(pwd)/results/`.
-
-IV. Structure of output directory
- ---------------------------
- ```powershell
- |--- <output_path>/                      : Output directory
- |------ <proj_id>/                       : D4Js project ID; Example: Chart_8
- |---------- ..._<template_name1>/        : Patch Template identifier
- |-------------- <patch_file>.java        : Generated patch by kBar
- |----------.
- |----------.
- |----------.
- |---------- switch-info.json             : Json file with context information regarding patch space
- ```
-----
+In each directory:
+* ```switch-info.json```: Meta-information of patch candidates.
+* The other directories: Actual patch candidates (patched files).

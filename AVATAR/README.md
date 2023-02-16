@@ -31,4 +31,4 @@ Output files are in ```./d4j/<version>/0/```.
 
 In each directory:
 * ```switch-info.json```: Meta-information of patch candidates.
-* ```<FL_rank>/<template>/<id>/<patched_file>```: Actual patched files. 
+* The other directories: Actual patch candidates (patched files).
