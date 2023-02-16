@@ -1,9 +1,10 @@
-# Casino
+# SimAPR
+
+SimAPR is a fuzzing-inspired patch scheduling algorithm for APR.
 
 ## 1. Environments & Setup
 
-- Ubuntu 18.04
-- Python 3.6
+- Python >= 3.6
 - Java 1.7
 - [Defects4j](https://github.com/rjust/defects4j) 1.2.0
 
@@ -52,6 +53,31 @@ python3 /root/casino/casino.py -o /root/alpha-repair/out/Chart-1-casino-0 -t 180
 
 ## 4. Experiments
 Necessary resources for replication are in [experiments](./experiments/) folder.
+
+## 4.1. Patch Generation
+
+For the experiment, you first need to generate patches.
+Check each tool's README.md file for more information.
+
+### 4.1.1 TBar, Avatar, kPar and Fixminer
+
+* ```seeds.py```: list of seeds for out experiment
+
+### 4.1.2. Recoder and AlphaRepair
+
+- Recoder and AlphaRepair are learning-based APR tools. They require GPU to generate patches.
+ If you are using docker, you need to run it in separate docker container with `--gpus=all` options.
+- If gpus are ready, install [anaconda](https://www.anaconda.com/).
+  You can setup environment by
+
+```
+cd recoder
+# or cd alpha-repair
+conda env new -f data/env.yaml
+```
+
+## 4.2. [Reproduce Casino](./experiments/README.md)
+
 
 ## 5. Project Structure
 ```
