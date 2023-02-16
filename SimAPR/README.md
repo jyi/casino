@@ -68,6 +68,22 @@ Then, new algorithm should select one `TbarCaseInfo`, create `TbarPatchInfo` and
 
 For example, the header of new function should be: `def select_patch_tbar_<new_algorithm>(state: MSVState) -> TbarPatchInfo`.
 
+Implementation of `original order` algorithm will be a good example.
+```
+def select_patch_tbar(state: MSVState) -> TbarPatchInfo:
+  loc = state.patch_ranking.pop(0)
+  caseinfo = state.switch_case_map[loc]
+  caseinfo.parent.parent.parent.case_rank_list.pop(0)
+  return TbarPatchInfo(caseinfo)
+```
+In line 2, SimAPR gets ID of the first patch from `state.patch_ranking`. `state.patch_ranking` saves the original sequence from original tool. Note that it removes selected patch from `state.patch_ranking`.
+
+In line 3, SimAPR gets actual location of patched file from `state.switch_case_map`. `state.switch_case_map` is the mapping of patch ID and actual location of patched file.
+
+In line 4, SimAPR removes selected patch from the remaining patch list in method level. Actually this line is for handling SeAPR algorithm, but you should insert this line just before the return.
+
+In line 5, create `TbarPatchInfo` and return it.
+
 ### Learning-based tools
 For learning-based tools, similar as template-based tools, implements new algorithm in `select_patch_recoder_mode` function.
 ```
