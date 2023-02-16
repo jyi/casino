@@ -9,7 +9,7 @@ SimAPR is a fuzzing-inspired patch scheduling algorithm for APR.
 - [Defects4j](https://github.com/rjust/defects4j) 1.2.0
 - Maven
 
-### To install patch generator
+### 1.1. To install patch generator
 Before run SimAPR, you have to generate patch candidates. We modified 6 APR tools: ```TBar```, ```Avatar```, ```kPar```, ```Fixminer```, ```AlphaRepair``` and ```Recoder```. We removed patch validation step from these tools and directly save all patch candidates.
 
 Note: patch generator needs a lot of disk space, to save all candidates. If you use container, we highly recommend to bind the disk or volume the disk.
@@ -20,7 +20,7 @@ $ cd {tool}
 $ ./compile.sh
 ```
 
-### Recoder and AlphaRepair
+### 1.2. Recoder and AlphaRepair
 For AlphaRepair and Recoder, you need GPU to generate patch candidates.
 If you want to run SimAPR in container, you need `--gpus=all` option when you create a container.
 
@@ -31,6 +31,22 @@ To setup ```AlphaRepair``` and ```Recoder```:
 $ cd recoder  # or cd alpha-repair
 $ conda env new -f data/env.yaml
 $ conda activate recoder # or alpha
+```
+
+#### 1.2.1. Prepare Recoder Model
+For the case of ```Recoder```, you should prepare model first.
+You can train model yourself (see below) or get the pre-trained model from docker image.
+
+```
+sudo docker pull zqh111/recoder:interface
+```
+
+Model is in `/root/Repair/checkpointSearch/best_model.ckpt` image.
+Copy this file to this directory.
+
+```
+mkdir checkpointSearch
+cp /root/Repair/checkpointSearch/best_model.ckpt ./checkpointSearch
 ```
 
 ### Setup SimAPR
