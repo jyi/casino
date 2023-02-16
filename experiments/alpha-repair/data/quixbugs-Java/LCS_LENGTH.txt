@@ -1,2 +1,0 @@
-- if (dp.containsKey(i-1)) {
-+ if (!dp.isEmpty()) {

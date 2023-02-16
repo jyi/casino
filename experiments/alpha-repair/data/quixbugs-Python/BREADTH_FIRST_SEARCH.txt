@@ -1,2 +1,0 @@
-- while True:
-+ while queue is not None:

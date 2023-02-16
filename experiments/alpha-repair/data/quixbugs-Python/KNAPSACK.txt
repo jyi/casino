@@ -1,2 +1,0 @@
-- if weight < j:
-+ if  weight <= j: #

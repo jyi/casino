@@ -1,2 +1,0 @@
-+ opstack. push ( token ) ;
-  }

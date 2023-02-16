@@ -1,2 +1,0 @@
-- } else if (x > pivot) {
-+ } else if  (x >= pivot) {
