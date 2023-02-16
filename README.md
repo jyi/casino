@@ -4,106 +4,66 @@ SimAPR is a fuzzing-inspired patch scheduling algorithm for APR.
 
 ## 1. Environments & Setup
 
-- Python >= 3.6
-- Java 1.7
+- Python >= 3.8
+- JDK 1.8
 - [Defects4j](https://github.com/rjust/defects4j) 1.2.0
+- Maven
 
-```shell
-pip install -r requirements.txt
+### To install patch generator
+Before run SimAPR, you have to generate patch candidates. We modified 6 APR tools: ```TBar```, ```Avatar```, ```kPar```, ```Fixminer```, ```AlphaRepair``` and ```Recoder```.
+
+To compile ```TBar```, ```Avatar```, ```kPar``` and ```Fixminer```:
+```
+$ cd {tool}
+$ ./compile.sh
 ```
 
+### TODO: Recoder and AlphaRepair
+For AlphaRepair and Recoder, you need GPU to generate patch candidates.
+If you want to run SimAPR in container, you need `--gpus=all` option when you create a container.
 
-## 2. Run
+Also, you need [Anaconda](https://www.anaconda.com/).
 
-
-Run casino for TBar
+To setup ```AlphaRepair``` and ```Recoder```:
 ```
-casino.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --tbar-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_tbar>/buggy
-```
-
-Run casino for Recoder
-```
-casino.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --recoder-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_recoder>/buggy
+$ cd recoder  # or cd alpha-repair
+$ conda env new -f data/env.yaml
 ```
 
-Example:
-```shell
-python3 /root/casino/casino.py -o /root/alpha-repair/out/Chart-1-casino-0 -t 180000 -w /root/alpha-repair/d4j/Chart-1 -p /root/alpha-repair -m guided -T 18000 --use-pass-test --recoder-mode --use-simulation-mode /root/alpha-repair/sim/Chart-1/Chart-1-sim.json --use-exp-alpha --seed 1812569871 -- python3 /root/casino/script/d4j_run_test.py /root/alpha-repair/buggy
+### Setup SimAPR
+SimAPR is implemented in Python3. SimAPR is in ```SimAPR/``` directory. To setup SimAPR:
+```
+$ cd SimAPR
+$ python3 -m pip install -r requirements.txt
 ```
 
-## 3. Options
-* `-o <output_dir>`: output directory (`--outdir`)
-* `-w <path_to_inputs>`: directory to input json file and patched sources (`--workdir`)
-* `-t <millisecond>`: timeout for single test (`--timeout`)
-* `-m <mode>`: mode (`--mode`)
-    - guided, seapr, genprog
-    - recoder, tbar, fixminer : these are option when using original tool's algorithm.
-* `-E <iteration>`: iteration limit (`--cycle-limit`)
-* `-T <second>`: time limit (`--time-limit`)
-* `--use-pattern`: In `seapr` mode, use `SeAPR++`.
-* `--use-full-validation` : Use full validation matrix for `seapr`.
-* `--seed <int>`: Use seed for random
-* `--ignore-compile-error`: Do not update result for non-compilable patch candidates
-* `--count-compile-fail`: Do not count iteration for non-compilable patch candidates
-* `--not-use-<guide/epsilon>`: Do not use vertical/horizontal search
-- `--tbar-mode`: required for template-based Java APR tools(TBar, AVATAR, FixMiner, KPar)
-- `--recoder-mode`: required for learning-based APR tools(Recoder, AlphaRepair)
-* `--fixminer-mode`: required for fixminer
+## 2. How to reproduce experiment
+All scripts to reproduce our experiment are already prepared in ```experiments/``` directory.
 
+Details about our experiments are explained in ```experiments/```.
 
-## 4. Experiments
-Necessary resources for replication are in [experiments](./experiments/) folder.
+## 3. Run
+This section explains details how to run our implementations.
 
-## 4.1. Patch Generation
+To reproduce our experiments, we highly recommend to look section 2: How to reproduce experiment.
 
-For the experiment, you first need to generate patches.
-Check each tool's README.md file for more information.
+### Run patch generator
+We modified 6 APR tools to generate and save all patch candidates.
+Since each tool needs different commands to run, each tool contains their own README in their directory:
+- [TBar](https://github.com/CasinoRepair/SimAPR/tree/main/TBar)
+- [Avatar](https://github.com/CasinoRepair/SimAPR/tree/main/AVATAR)
+- [kPar](https://github.com/CasinoRepair/SimAPR/tree/main/kPar)
+- [Fixminer](https://github.com/CasinoRepair/SimAPR/tree/main/Fixminer)
+- [AlphaRepair](https://github.com/CasinoRepair/SimAPR/tree/main/alpha-repair)
+- [Recoder](https://github.com/CasinoRepair/SimAPR/tree/main/recoder)
 
-### 4.1.1 TBar, Avatar, kPar and Fixminer
-
-* ```seeds.py```: list of seeds for out experiment
-
-### 4.1.2. Recoder and AlphaRepair
-
-- Recoder and AlphaRepair are learning-based APR tools. They require GPU to generate patches.
- If you are using docker, you need to run it in separate docker container with `--gpus=all` options.
-- If gpus are ready, install [anaconda](https://www.anaconda.com/).
-  You can setup environment by
-
+### Run SimAPR
+Implementation of SimAPR is in ```SimAPR/``` directory.
+To run SimAPR:
 ```
-cd recoder
-# or cd alpha-repair
-conda env new -f data/env.yaml
+$ cd SimAPR
+$ python3 simapr.py [options] -- {test_command}
 ```
+Details are described in ```SimAPR/```.
 
-## 4.2. [Reproduce Casino](./experiments/README.md)
-
-
-## 5. Project Structure
-```
-.
-├── experiment
-├── docs
-├── casino.py
-├── core.py
-├── msv.py
-├── select_patch.py
-├── run_test.py
-├── condition.py
-├── msv_result_handler.py
-├── plot.py
-├── requirements.txt
-├── .gitignore
-├── README.md
-```
-
-* experiment: directory for experiment.
-* docs: supplementary.
-* casino.py: Entry point, read config files.
-* core.py: Most of data structures are defined.
-* msv.py: Main loop of Casino.
-* select_patch.py: Algorithms to select patch from patch space.
-* run_test.py: Run test and get result.
-* condition.py: Need for condition synthesis, for `prophet`.
-* msv_result_handler.py: Update data after each iteration.
-* plot.py: Generate plot from outputs. Only for result analysis.
+```{test_command}``` is the command to run test. For convenience, we prepared a script to run Defects4J tests in ```SimAPR/script/d4j_run_test.py```.

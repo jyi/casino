@@ -1,3 +1,0 @@
-Failing tests: 2
-  - org.apache.commons.cli2.bug.BugCLI144Test::testFileValidator
-  - org.apache.commons.cli2.validation.FileValidatorTest::testValidate_WritableFile
