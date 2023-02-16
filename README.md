@@ -10,7 +10,7 @@ SimAPR is a fuzzing-inspired patch scheduling algorithm for APR.
 - Maven
 
 ### To install patch generator
-Before run SimAPR, you have to generate patch candidates. We modified 6 APR tools: ```TBar```, ```Avatar```, ```kPar```, ```Fixminer```, ```AlphaRepair``` and ```Recoder```.
+Before run SimAPR, you have to generate patch candidates. We modified 6 APR tools: ```TBar```, ```Avatar```, ```kPar```, ```Fixminer```, ```AlphaRepair``` and ```Recoder```. We removed patch validation step from these tools and directly save all patch candidates.
 
 To compile ```TBar```, ```Avatar```, ```kPar``` and ```Fixminer```:
 ```
