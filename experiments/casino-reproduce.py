@@ -1,8 +1,8 @@
 import subprocess
-import d4j_avatar
-import d4j_fixminer
-import d4j_kpar
-import d4j_tbar
+import experiments.avatar.d4j_avatar as d4j_avatar
+import experiments.fixminer.d4j_fixminer as d4j_fixminer
+import experiments.kpar.d4j_kpar as d4j_kpar
+import experiments.tbar.d4j_tbar as d4j_tbar
 import getopt
 import seeds
 
