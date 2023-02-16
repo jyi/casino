@@ -10,7 +10,7 @@ Then, run
 
 ```
 conda env create -f data/env.yaml
-conda activate recoder
+conda activate alpha
 ```
 
 1. Generate patch candidates
