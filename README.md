@@ -20,16 +20,17 @@ $ cd {tool}
 $ ./compile.sh
 ```
 
-### TODO: Recoder and AlphaRepair
+### Recoder and AlphaRepair
 For AlphaRepair and Recoder, you need GPU to generate patch candidates.
 If you want to run SimAPR in container, you need `--gpus=all` option when you create a container.
 
-Also, you need [Anaconda](https://www.anaconda.com/).
+Also, you need to install [Anaconda](https://www.anaconda.com/).
 
 To setup ```AlphaRepair``` and ```Recoder```:
 ```
 $ cd recoder  # or cd alpha-repair
 $ conda env new -f data/env.yaml
+$ conda activate recoder # or alpha
 ```
 
 ### Setup SimAPR

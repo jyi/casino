@@ -15,6 +15,7 @@ Next, run script to generate patch candidates:
 ./FLFix.sh <bug_id>
 ```
 Note that `<bug_id>` should be `<subject>_<id>` (e.g. `Chart_4`)
+Before run `FLFix.sh`, You should change paths in `FLFix.sh`, especially `d4jData` (it should be `./buggy` as absolute path) and `d4jPath`(path where defects4j is installed).
 
 ### Output
 Output will be saved in `d4j/<bug_id>`.
