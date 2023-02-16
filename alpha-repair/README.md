@@ -1,26 +1,23 @@
 # AlphaRepair
 
-## Environments & Setup
-* Ubuntu 20.04
-* Python 3.8
-* Java 1.7
-* [Defects4j](https://github.com/rjust/defects4j) 1.2.0
+## Patch Generation
 
-```shell
-pip install -r requirements-ubuntu2004.txt
+0. Set environment
+
+You need to install java, defects4j, [anaconda](https://www.anaconda.com/).
+
+Then, run
+
+```
+conda env create -f data/env.yaml
+conda activate alpha
 ```
 
-## Run Casino
-* Use `script/casino-run.py`
+1. Generate patch candidates
 
-1. Generate patch candidiates
-
-    ```
-    python3 script/casino-run.py gen
-    ```
-2. Run casino
+    For Chart-1,
 
     ```
-    python3 script/casino-run.py casino <id>
+    python3 experiment.py --bug_id Chart-1 --output_folder d4j --skip_v --re_rank --beam_width 5 --top_n_locations 40
     ```
-    Output will be in `out-<id>` directory.
+
