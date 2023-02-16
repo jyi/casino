@@ -1,0 +1,10 @@
+.classpath
+.project
+.settings/
+logs/
+.DS_Store
+D4J/
+backup/
+temp/*
+results-bak/
+target/
