@@ -1,3 +1,0 @@
-Failing tests: 2
-  - org.apache.commons.lang.LocaleUtilsTest::testCountriesByLanguage
-  - org.apache.commons.lang.text.StrBuilderTest::testLang295

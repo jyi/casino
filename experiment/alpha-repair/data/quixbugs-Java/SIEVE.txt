@@ -1,2 +1,0 @@
-- if (any(list_comp(n, primes))) {
-+ if (all(list_comp(n, primes))) {

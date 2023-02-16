@@ -1,2 +1,0 @@
-- return binsearch(arr, x, mid, end);
-+ return binsearch(arr, x, mid + 1, end);

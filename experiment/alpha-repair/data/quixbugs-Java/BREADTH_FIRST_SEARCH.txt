@@ -1,2 +1,0 @@
-- while (true) {
-+ while  (queue.size() > 0) {

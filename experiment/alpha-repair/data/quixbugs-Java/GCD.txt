@@ -1,2 +1,0 @@
-- return gcd(a % b, b);
-+ return gcd(b, a % b);

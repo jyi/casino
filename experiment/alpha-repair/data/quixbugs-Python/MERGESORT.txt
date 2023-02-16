@@ -1,2 +1,0 @@
-- if len(arr) == 0:
-+ if len(arr) == 0 or len(arr) <= 1:

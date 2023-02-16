@@ -1,2 +1,0 @@
-- result = result + alphabet[i]
-+ result =  alphabet[i] + result

@@ -1,2 +1,0 @@
-- for (Integer count : arr) {
-+ for (Integer count  : counts) {
