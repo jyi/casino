@@ -1,27 +1,27 @@
 # SimAPR
 
 ## 1. Setup
-Python >= 3.8
+You need Python >= 3.8 to run SimAPR.
 
+Install dependencies:
 ```
-pip install -r requirements.txt
+$ python3 -m pip install -r requirements.txt
 ```
 
 ## 2. Run
 
-Run SimAPR for TBar, AVATAR, KPar, FixMiner
+Run SimAPR for `TBar`, `Avatar`, `kPar` and `Fixminer`:
 
 ```
-python3 simpar.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --tbar-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_tbar>/buggy
+$ python3 simapr.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --tbar-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_tbar>/buggy
 ```
 
-Run SimAPR for Recoder, AlphaRepair
+Run SimAPR for `Recoder` and `AlphaRepair`:
 
 ```
-python3 simapr.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --recoder-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_recoder>/buggy
+$ python3 simapr.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --recoder-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_recoder>/buggy
 ```
-## 3. Options
-
+### Options
 * `-o <output_dir>`: output directory (`--outdir`)
 * `-w <path_to_inputs>`: directory to input json file and patched sources (`--workdir`)
 * `-t <millisecond>`: timeout for single test (`--timeout`)
@@ -42,34 +42,49 @@ python3 simapr.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-
 
 * `--fixminer-mode`: required for fixminer
 
+## 4. Extend Patch Scheduling Algorithm
+You can add your own algorithm to the SimAPR by modifing [select_patch.py](./select_patch.py) file.
 
-## 4. Project Structure
+### Template-based tools
+For template-based tools, implements your own algorithm in `select_patch_tbar_mode` function.
 ```
-.
-├── msv-search.py
-├── core.py
-├── msv.py
-├── select_patch.py
-├── run_test.py
-├── condition.py
-├── msv_result_handler.py
-├── plot.py
-├── requirements.txt
-├── .gitignore
-├── README.md
-├── cpr/
-└── venv/
+def select_patch_tbar_mode(state: MSVState) -> TbarPatchInfo:
+  if state.mode == MSVMode.tbar:
+    return select_patch_tbar(state)
+  elif state.mode==MSVMode.genprog:
+    return select_patch_tbar_genprog(state)
+  elif state.mode == MSVMode.seapr:
+    return select_patch_tbar_seapr(state)
+  else:
+    if use_stochastic(state): 
+      return select_patch_tbar_guided(state)
+    else:
+      return select_patch_tbar(state)
 ```
+We already implements 4 algorithms: `original order`, `GenProg` family, `SeAPR` and `SimAPR`.
 
-* msv-search.py: Entry point, read config files.
-* core.py: Most of data structures are defined
-* msv.py: Run MSV
-* select_patch.py: Algorithms to select patch from patch space.
-* run_test.py: Run test and get result.
-* condition.py: Need by conditional patches.
-* msv_result_handler.py: Update data using result, remove used patches.
-* plot.py: Plot graph from result.
+To implements new algorithm, parameter should be `state`, contains all global information.
+Then, new algorithm should select one `TbarCaseInfo`, create `TbarPatchInfo` and return it.
 
-## 5. Extend Patch Scheduling Algorithm
+For example, the header of new function should be: `def select_patch_tbar_<new_algorithm>(state: MSVState) -> TbarPatchInfo`.
 
-You can add your own algorithm to the SimAPR by modifing [select_patch.py](./select_patch.py) file. 
+### Learning-based tools
+For learning-based tools, similar as template-based tools, implements new algorithm in `select_patch_recoder_mode` function.
+```
+def select_patch_recoder_mode(state: MSVState) -> RecoderPatchInfo:
+  if state.mode == MSVMode.recoder:
+    return select_patch_recoder(state)
+  elif state.mode==MSVMode.genprog:
+    return select_patch_recoder_genprog(state)
+  elif state.mode == MSVMode.seapr:
+    return select_patch_recoder_seapr(state)
+  else:
+    if use_stochastic(state):
+      return select_patch_recoder_guided(state)
+    else:
+      return select_patch_recoder(state)
+```
+Same as template-based tools, we already implements 4 algorithms.
+everything is same as template-based tools, but new function should select one `RecoderCaseInfo` instead of `TbarCaseInfo` and return `RecoderPatchInfo` instead of `TbarPatchInfo`.
+
+Therefore, the header should be: `def select_patch_tbar_<new_algorithm>(state: MSVState) -> RecoderPatchInfo`.
