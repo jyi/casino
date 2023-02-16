@@ -1,3 +1,0 @@
-com.google.javascript.jscomp.ClosureCodingConvention@185@0.1924500897
-com.google.javascript.jscomp.ClosureCodingConvention@198@0.1666666667
-com.google.javascript.jscomp.ClosureCodingConvention@197@0.1666666667
