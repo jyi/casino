@@ -1,64 +1,33 @@
-# MSV-search
+# SimAPR
 
 ## 1. Setup
+Python >= 3.8
+
 ```
 pip install -r requirements.txt
 ```
 
 ## 2. Run
 
-Run msv-search
-```
-msv-search.py -o out-dir -w work-dir -m mode -t timeout -p path-to-msv -- php-test.py src tests workdir
-```
+Run SimAPR for TBar, AVATAR, KPar, FixMiner
 
-Make plot from result
 ```
-plot.py -i input-dir -o out-file.png -t title -c correct-patch
+python3 simpar.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --tbar-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_tbar>/buggy
 ```
 
-## 3. Mode
-* guided: default
-* prophet: using prophet method
-* spr: using spr method
-* random: random
-* seapr: using SeAPR
-* original: run original program
-* validation: validation
+Run SimAPR for Recoder, AlphaRepair
 
-
-## 4. Options
-* `-p` path-to-msv (`--msv-path`)
-* `-o` output-directory (`--outdir`)
-* `-w` work-directory (`--workdir`)
-* `-M` fuzzer-name (`--main-node`)
-* `-S` fuzzer-name (`--sub-node`)
-* `-t` timeout (`--timeout`)
-* `-m` mode (`--mode`)
-* `-E` cycle-limit (`--cycle-limit`)
-* `-T` time-limit (`--time-limit`)
-* `-c` correct-patch (`--correct-patch`)
-* `--use-condition-synthesis` : 
-    Apply probabilistic approach for constants
-* `--use-fl` : (deprecated) Use fault localization result
-* `--use-hierarchical-selection` n : (deprecated) Use p2, p3
-* `--use-pass-test` : Use pass test for p3
-* `--use-multi-line` n : Use multi-line patch
-* `--max-parallel-cpu` procs : 
-    Set how many test to run in parallel, for p3
-* `--skip-valid` : Skip initial validation
-* `--use-simulation-mode` previous/msv-result.json : Use result of previous experiment instead of actually run the test.
-* `--use-pattern`: Only in `seapr` mode, use `SeAPR++`.
-* `--use-full-validation` : Use full validation.
-* `--params` params : Use alternative parameters for guided algorithm.
-
+```
+python3 simapr.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-timeout> -T <timeout> --use-pass-test --recoder-mode --use-exp-alpha -- python3 script/d4j_run_test.py <path_to_recoder>/buggy
+```
 ## 3. Options
+
 * `-o <output_dir>`: output directory (`--outdir`)
 * `-w <path_to_inputs>`: directory to input json file and patched sources (`--workdir`)
 * `-t <millisecond>`: timeout for single test (`--timeout`)
 * `-m <mode>`: mode (`--mode`)
-    - guided, seapr, genprog
-    - recoder, tbar, fixminer : these are option when using original tool's algorithm.
+  * guided, seapr, genprog
+  * recoder, tbar, fixminer : these are option when using original tool's algorithm.
 * `-E <iteration>`: iteration limit (`--cycle-limit`)
 * `-T <second>`: time limit (`--time-limit`)
 * `--use-pattern`: In `seapr` mode, use `SeAPR++`.
@@ -67,11 +36,14 @@ plot.py -i input-dir -o out-file.png -t title -c correct-patch
 * `--ignore-compile-error`: Do not update result for non-compilable patch candidates
 * `--count-compile-fail`: Do not count iteration for non-compilable patch candidates
 * `--not-use-<guide/epsilon>`: Do not use vertical/horizontal search
+
 - `--tbar-mode`: required for template-based Java APR tools(TBar, AVATAR, FixMiner, KPar)
-- `--recoder-mode`: required for learning-based APR tools(Recoder, AlphaRepair)
+* `--recoder-mode`: required for learning-based APR tools(Recoder, AlphaRepair)
+
 * `--fixminer-mode`: required for fixminer
 
-## 5. Project Structure
+
+## 4. Project Structure
 ```
 .
 ├── msv-search.py
