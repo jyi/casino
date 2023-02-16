@@ -69,3 +69,7 @@ python3 simapr.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-test-
 * condition.py: Need by conditional patches.
 * msv_result_handler.py: Update data using result, remove used patches.
 * plot.py: Plot graph from result.
+
+## 5. Extend Patch Scheduling Algorithm
+
+You can add your own algorithm to the SimAPR by modifing [select_patch.py](./select_patch.py) file. 

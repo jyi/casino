@@ -34,16 +34,16 @@ $ conda activate recoder # or alpha
 ```
 
 ### Setup SimAPR
-SimAPR is implemented in Python3. SimAPR is in ```SimAPR/``` directory. To setup SimAPR:
+SimAPR is implemented in Python3. SimAPR is in [SimAPR/](./SimAPR/) directory. To setup SimAPR:
 ```
 $ cd SimAPR
 $ python3 -m pip install -r requirements.txt
 ```
 
 ## 2. How to reproduce experiment
-All scripts to reproduce our experiment are already prepared in ```experiments/``` directory.
+All scripts to reproduce our experiment are in [experiments/](./experiments/) directory.
 
-Details about our experiments are explained in ```experiments/```.
+Details about our experiments are explained in [experiments/](./experiments/).
 
 ## 3. Run
 This section explains details how to run our implementations.
@@ -61,13 +61,13 @@ Since each tool needs different commands to run, each tool contains their own RE
 - [Recoder](https://github.com/CasinoRepair/SimAPR/tree/main/recoder)
 
 ### Run SimAPR
-Implementation of SimAPR is in ```SimAPR/``` directory.
+Implementation of SimAPR is in [SimAPR/](./SimAPR) directory.
 To run SimAPR:
 ```
 $ cd SimAPR
 $ python3 simapr.py [options] -- {test_command}
 ```
-Details are described in ```SimAPR/```.
+Details are described in [SimAPR/](./SimAPR/README.md).
 
 ```{test_command}``` is the command to run test. For convenience, we prepared a script to run Defects4J tests in ```SimAPR/script/d4j_run_test.py```.
 
