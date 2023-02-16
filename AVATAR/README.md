@@ -9,7 +9,16 @@ First, compile this project:
 ```
 $ ./compile.sh
 ```
-  
+
+Then, checkout the project in `buggy/`:
+```
+$ defects4j checkout -p <subject> -v <id>b -w buggy/<project>
+```
+For example,
+```
+$ defects4j checkout -p Chart -v 4b -w buggy/Chart_4
+```
+
 Next, run script to generate patch candidates:
 ```
 ./FLFix.sh <bug_id>
@@ -17,9 +26,9 @@ Next, run script to generate patch candidates:
 Note that `<bug_id>` should be `<subject>_<id>` (e.g. `Chart_4`)
 Before run `FLFix.sh`, You should change paths in `FLFix.sh`, especially `d4jData` (it should be `./buggy` as absolute path) and `d4jPath`(path where defects4j is installed).
 
-### Output
-Output will be saved in `d4j/<bug_id>`.
+## Output
+Output files are in ```./d4j/<version>/0/```.
 
-`d4j/<bug_id>/switch-info.json` file contains meta-information about patch space. `SimAPR` will read and parse this file.
-
-Other directories are actual patch candidates.
+In each directory:
+* ```switch-info.json```: Meta-information of patch candidates.
+* ```<FL_rank>/<template>/<id>/<patched_file>```: Actual patched files. 
