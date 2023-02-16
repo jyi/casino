@@ -73,7 +73,7 @@ Check each tool's README.md file for more information.
 ```
 cd recoder
 # or cd alpha-repair
-conda env new -f data/env.yaml
+conda env create -f data/env.yaml
 ```
 
 ## 4.2. [Reproduce Casino](./experiments/README.md)

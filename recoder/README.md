@@ -1,30 +1,46 @@
 # Recoder
 A PyTorch Implementation of "A Syntax-Guided Edits Decoder for Neural Program Repair"
 
-## Run Casino
+## Patch Generation
 
-* Use `script/casino-run.py`
+0. Set environment
 
-1. Generate patch candidates
+You need to install java, defects4j, [anaconda](https://www.anaconda.com/). Also, you need a GPU to run Recoder.
+
+Then, run
+```
+conda env create -f data/env.yaml
+conda activate recoder
+```
+
+1. Get model
+
+You can train model yourself (see below) or get the pre-trained model from docker image.
+
+```
+sudo docker pull zqh111/recoder:interface
+```
+Model is in `/root/Repair/checkpointSearch/best_model.ckpt`.
+Copy this file to this directory.
+
+```
+mkdir checkpointSearch
+cp /root/Repair/checkpointSearch/best_model.ckpt ./checkpointSearch
+```
+
+2. Generate patch candidates
+
+    For Chart-1,
 
     ```
-    python3 script/casino-run.py gen
+    python3 testDefect4j.py Chart-1
     ```
 
     If finished, run
 
     ```
-    python3 script/casino-run.py repair
+    python3 repair.py Chart-1
     ```
-
-2. Run casino
-
-    ```
-    python3 script/casino-run.py casino <id>
-    ```
-
-    Output will be in `out-<id>` directory.
-
 
 # Introduction
 Automated Program Repair (APR) helps improve the efficiency of software development and maintenance. Recent APR techniques use deep learning, particularly the encoder-decoder architecture, to generate patches. Though existing DL-based APR approaches have proposed different encoder architectures, the decoder remains to be the standard one, which generates a sequence of tokens one by one to replace the faulty statement. This decoder has multiple limitations: 1) allowing to generate syntactically incorrect programs, 2) inefficiently representing small edits, and 3) not being able to generate project-specific identifiers.
