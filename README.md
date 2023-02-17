@@ -4,6 +4,7 @@ SimAPR is a fuzzing-inspired patch scheduling algorithm for APR.
 
 ## 1. Environments & Setup
 
+### Environment
 - Python >= 3.8
 - JDK 1.8
 - [Defects4j](https://github.com/rjust/defects4j) 1.2.0
@@ -40,7 +41,7 @@ $ cd SimAPR
 $ python3 -m pip install -r requirements.txt
 ```
 
-## 2. How to reproduce experiment
+## 2. How to reproduce our experiment
 All scripts to reproduce our experiment are in [experiments/](./experiments/) directory.
 
 Details about our experiments are explained in [experiments/](./experiments/).
