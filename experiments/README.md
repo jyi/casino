@@ -1,6 +1,10 @@
 # Experiment
 
 ## 1. Patch Generation
+
+We assume that you've done the preparation for patch generation written in [here](../README.md#1-environments--setup)
+
+### 1.1. Template-Based Tools (TBar, AVATAR, KPar, FixMiner)
 Scripts for patch generation are already prepared. Each tool has `<tool>.py` to generate patches.
 
 For example, for Avatar, run `avatar/avatar.py` to generate patch candidates.
@@ -17,6 +21,15 @@ $ cd avatar
 $ python3 avatar.py Chart_4
 ```
 This will generate patch candidates with Avatar for Chart 4.
+
+### 1.2. Learning-Based Tools (Recoder, AlphaRepair)
+
+```
+cd <tool>
+conda activate recoder # or alpha
+python3 <tool>.py <project>
+```
+
 
 Note: this will consumes a lot of disk space. Make sure that you have more than 1GB of space.
 
