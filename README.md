@@ -20,6 +20,14 @@ $ cd {tool}
 $ ./compile.sh
 ```
 
+#### 1.1.1. AVATAR
+
+Before patch generation, you should change paths in script to correct absolute path of your environment.
+
+In `AVATAR/FLFix.sh`, you should change
+  - `d4jData` to `./AVATAR/buggy` as absoulte path.
+  - `d4jPath` to the path of defects4j.
+
 ### 1.2. Recoder and AlphaRepair
 For AlphaRepair and Recoder, you need GPU to generate patch candidates.
 If you want to run SimAPR in container, you need `--gpus=all` option when you create a container.
