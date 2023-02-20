@@ -1,6 +1,6 @@
 # SimAPR
 
-SimAPR is a fuzzing-inspired patch scheduling algorithm for APR.
+SimAPR is a replay-based patch-scheduling simulation system. Running an APR tool takes long. The patch space is large and it takes long to build and test each patched program. This makes it difficult to experiment with diverse patch schedulig algorithms. SimAPR caches information for individual patch such as time taken to run the patched program and the result of testing. This cached information is used when evaluating a patch-scheduling algorithm given to SimAPR as an input.
 
 ## 1. Environments & Setup
 
