@@ -38,13 +38,13 @@ Also, you need to install [Anaconda](https://www.anaconda.com/).
 To setup ```AlphaRepair``` and ```Recoder```:
 ```
 $ cd recoder  # or cd alpha-repair
-$ conda env new -f data/env.yaml
+$ conda env create -f data/env.yaml
 $ conda activate recoder # or alpha
 ```
 
 #### 1.2.1. Prepare Recoder Model
 For the case of ```Recoder```, you should prepare model first.
-You can train model yourself (see below) or get the pre-trained model from docker image.
+You can train model yourself or get the pre-trained model from docker image.
 
 ```
 sudo docker pull zqh111/recoder:interface
