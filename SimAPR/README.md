@@ -124,7 +124,7 @@ everything is same as template-based tools, but new function should select one `
 Therefore, the header should be: `def select_patch_tbar_<new_algorithm>(state: MSVState) -> RecoderPatchInfo`.
 
 ### Implementation of Patch Tree
-The data structures of Patch Tree are implemented in [core.py](./core.py).
+The data structures of Patch Tree are implemented in [core.py](./core.py). If you need additional data structures (e.g. list or dict), just add them in these classes.
 
 The root of the tree is `MSVState`. Every files are stored in `MSVState.file_info_map`. The keys are file name, and the values are `FileInfo`.
 
@@ -135,3 +135,5 @@ The root of the tree is `MSVState`. Every files are stored in `MSVState.file_inf
 `LineInfo` represents each patched line. Line number is stored in `LineInfo.line_number`. If the APR tool is template-based (e.g. `TBar`), Templates are stored in `LineInfo.tbar_type_info_map`. If the APR tool is learning-based (e.g. `Recoder`), Actual patches are stored in `LineInfo.recoder_case_info_map`. For `tbar_type_info_map`, the keys are the names of the templates and the values are `TbarTypeInfo`. For `recoder_case_info_map`, the keys are the ID of the patches and the values are `RecoderCaseInfo`.
 
 `TbarTypeInfo` represents each template for template-based APR tools. Template name is stored in `TbarTypeInfo.mutation`. Every patches are stored in `TbarTypeInfo.tbar_case_info_map`. The keys are the patch IDs and the values are `TbarCaseInfo`.
+
+The nodes of patch treee are removed in `TbarPatchInfo/RecoderPatchInfo.remove_patch`. In default, each selected nodes are removed after the test execution. After the selected patch is tried, the results of failing tests are updated in `TbarPatchInfo/RecoderPatchInfo.update_result` and the results of passing tests are updated in `TbarPatchInfo/RecoderPatchInfo.update_result_positive` (e.g. vertical search).
