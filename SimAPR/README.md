@@ -43,7 +43,25 @@ $ python3 simapr.py -o <output_dir> -w <path_to_inputs> -m <mode> -t <single-tes
 * `--fixminer-mode`: required for fixminer
 
 ## 4. Extend Patch Scheduling Algorithm
-You can add your own algorithm to the SimAPR by modifing [select_patch.py](./select_patch.py) file.
+Before adding new algorithm, add new `mode` to use new algorithm.
+In class `MSVMode`, [core.py](./core.py), add new `mode`.
+```
+class MSVMode(Enum):
+  prophet = 1
+  guided = 2
+  random = 3
+  original = 4
+  positive = 5
+  validation = 6
+  spr = 7
+  seapr = 8
+  tbar = 9
+  recoder = 10
+  genprog = 11
+```
+Add new mode after the `genprog`.
+
+After that, you can add your own algorithm to the SimAPR easily by modifing [select_patch.py](./select_patch.py) file.
 
 ### Template-based tools
 For template-based tools, implements your own algorithm in `select_patch_tbar_mode` function.
@@ -61,14 +79,14 @@ def select_patch_tbar_mode(state: MSVState) -> TbarPatchInfo:
     else:
       return select_patch_tbar(state)
 ```
-We already implements 4 algorithms: `original order`, `GenProg` family, `SeAPR` and `SimAPR`.
+We already implemented 4 algorithms: `original tool`, `GenProg` family, `SeAPR` and `Casino`.
 
 To implements new algorithm, parameter should be `state`, contains all global information.
 Then, new algorithm should select one `TbarCaseInfo`, create `TbarPatchInfo` and return it.
 
 For example, the header of new function should be: `def select_patch_tbar_<new_algorithm>(state: MSVState) -> TbarPatchInfo`.
 
-Implementation of `original order` algorithm will be a good example.
+Implementation of `original tool` algorithm will be a good example.
 ```
 def select_patch_tbar(state: MSVState) -> TbarPatchInfo:
   loc = state.patch_ranking.pop(0)
