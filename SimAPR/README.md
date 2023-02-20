@@ -128,12 +128,62 @@ The data structures of Patch Tree are implemented in [core.py](./core.py). If yo
 
 The root of the tree is `MSVState`. Every files are stored in `MSVState.file_info_map`. The keys are file name, and the values are `FileInfo`.
 
+```
+class FileInfo:
+  def __init__(self, file_name: str) -> None:
+    self.file_name = file_name                          # Name of the patched file
+    self.func_info_map: Dict[str, FuncInfo] = dict()    # Methods: f"{func_name}:{func_line_begin}-{func_line_end}"
+```
 `FileInfo` represents each patched file. File name is stored in `FileInfo.file_name`. Every methods/functions are stored in `FileInfo.func_info_map`. The keys are unique IDs of methods/functions, contain method name and start/end line number. The values are `FuncInfo`.
 
+```
+class FuncInfo:
+  def __init__(self, parent: FileInfo, func_name: str, begin: int, end: int) -> None:
+    self.parent = parent                                      # Parent node (FileInfo)
+    self.func_name = func_name                                # Method/function name
+    self.begin = begin                                        # Start line number
+    self.end = end                                            # End line number
+    self.id = f"{self.func_name}:{self.begin}-{self.end}"     # Method ID
+    self.line_info_map: Dict[uuid.UUID, LineInfo] = dict()    # Patched lines
+```
 `FuncInfo` represents each patched method/function. Method/function name is stored in `FuncInfo.func_name` and start/end line number are stored in `FuncInfo.begin/end`. Every lines are stored in `FuncInfo.line_info_map`. The keys are random UUID that identifies each method/function. The values are `LineInfo`.
 
+```
+class LineInfo:
+  def __init__(self, parent: FuncInfo, line_number: int) -> None:
+    self.parent = parent                                                 # Parent node (FuncInfo)
+    self.uuid = uuid.uuid4()                                             # Random UUID
+    self.line_number = line_number                                       # Patched line
+    self.tbar_type_info_map: Dict[str, TbarTypeInfo] = dict()            # Templates, if template-based
+    self.recoder_case_info_map: Dict[int, RecoderCaseInfo] = dict()      # Patches, if learning-based
+```
 `LineInfo` represents each patched line. Line number is stored in `LineInfo.line_number`. If the APR tool is template-based (e.g. `TBar`), Templates are stored in `LineInfo.tbar_type_info_map`. If the APR tool is learning-based (e.g. `Recoder`), Actual patches are stored in `LineInfo.recoder_case_info_map`. For `tbar_type_info_map`, the keys are the names of the templates and the values are `TbarTypeInfo`. For `recoder_case_info_map`, the keys are the ID of the patches and the values are `RecoderCaseInfo`.
+* Note: we do not use template level for learning-based tools.
 
+```
+class TbarTypeInfo:
+  def __init__(self, parent: LineInfo, mutation: str) -> None:
+    self.parent = parent                                        # Parent node (LineInfo)
+    self.mutation = mutation                                    # Template name
+    self.tbar_case_info_map: Dict[str, TbarCaseInfo] = dict()   # Patches
+```
 `TbarTypeInfo` represents each template for template-based APR tools. Template name is stored in `TbarTypeInfo.mutation`. Every patches are stored in `TbarTypeInfo.tbar_case_info_map`. The keys are the patch IDs and the values are `TbarCaseInfo`.
+
+```
+class TbarCaseInfo:
+  def __init__(self, parent: TbarTypeInfo, location: str, start: int, end: int) -> None:
+    self.parent = parent      # Parent node (TbarTypeInfo)
+    self.location = location  # Patch ID and relational path of the actual patched file
+```
+`TbarCaseInfo` represents each actual patches for template-based APR tools (e.g. `TBar`).
+
+```
+class RecoderCaseInfo:
+  def __init__(self, parent: LineInfo, location: str, case_id: int) -> None:
+    self.parent = parent        # Parent node (LineInfo)
+    self.location = location    # Relational path of the actual patched file
+    self.case_id = case_id      # Patch ID
+```
+`RecoderCaseInfo` represents each actual patches for learning-based APR tools (e.g. `Recoder`).
 
 The nodes of patch treee are removed in `TbarPatchInfo/RecoderPatchInfo.remove_patch`. In default, each selected nodes are removed after the test execution. After the selected patch is tried, the results of failing tests are updated in `TbarPatchInfo/RecoderPatchInfo.update_result` and the results of passing tests are updated in `TbarPatchInfo/RecoderPatchInfo.update_result_positive` (e.g. vertical search).
