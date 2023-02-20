@@ -25,7 +25,7 @@ def run(project):
     with open(f'FailedTestCases/{project}.txt','w') as f:
         f.write(result.stdout.decode('utf-8'))
     
-    result=subprocess.run(['KParFixRunner.sh',
+    result=subprocess.run(['./KParFixRunner.sh',
             'buggy/',project,'/defects4j/',
             'd4j/'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     output=result.stdout.decode('utf-8')
